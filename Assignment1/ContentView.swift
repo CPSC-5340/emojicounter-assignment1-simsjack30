@@ -1,21 +1,47 @@
-//
-// ContentView.swift : Assignment1
-//
-// Copyright © 2023 Auburn University.
-// All Rights Reserved.
-
+// John Sims
+// Assignment 1
+// CPSC 5340
+// 16 MAR 2024
 
 import SwiftUI
 
 struct ContentView: View {
+    
+    let emojis = ["🏠", "🐶", "😎", "🏆", "📅"]
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world and Jack!")
+        NavigationView {
+            List {
+                ForEach(emojis, id: \.self) { emoji in
+                    ListItem(emoji: emoji)
+                }
+            }
+            .navigationTitle("Emoji Counter")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .padding()
+    }
+}
+
+struct ListItem: View {
+    let emoji: String
+    @State private var num = 0
+    
+    var body: some View {
+        HStack {
+            Text("\(emoji) Counter: \(num)")
+            Spacer()
+            Button(action: {
+                self.num += 1
+            }) {
+                Text("+").frame(minWidth: 20, minHeight: 20)
+            }
+            Button(action: {
+                self.num -= 1
+            }) {
+                Text("-").frame(minWidth: 20, minHeight: 20)
+            }
+        }
+        .buttonStyle(BorderedButtonStyle())
     }
 }
 
